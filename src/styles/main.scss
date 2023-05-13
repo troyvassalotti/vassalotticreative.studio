@@ -1,5 +1,6 @@
 @import "../_includes/reset";
 @import "../_includes/utils";
+@import "../_includes/variables";
 
 :root {
   --step--2: clamp(0.78rem, calc(0.78rem + 0.03vw), 0.8rem);
@@ -43,10 +44,22 @@ body {
   font-size: var(--step-0);
 }
 
+[class*="step-"] {
+  font-size: var(--typescale-bp, var(--typescale, revert));
+}
+
 /* Generate Type Scale Classes */
 @for $index from -2 through 5 {
   .step-#{$index} {
-    font-size: var(--step-#{$index});
+    --typescale: var(--step-#{$index});
+  }
+
+  @each $scale, $bp in $breakpoint-scales {
+    @media (min-width: $bp) {
+      .#{$scale}\:step-#{$index} {
+        --typescale-bp: var(--step-#{$index});
+      }
+    }
   }
 }
 
@@ -65,15 +78,43 @@ body {
   display: grid;
   gap: var(--grid-gutter);
   grid-template-columns: var(--grid-template, repeat(var(--grid-columns), 1fr));
-}
 
-[class^="u-grid-item"] {
-  grid-column: span var(--grid-span, 1);
+  &.u-auto-layout {
+    --grid-template: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  &:not(.u-auto-layout) {
+    [class^="u-grid-item"] {
+      grid-column: span var(--grid-span-bp, var(--grid-span, var(--grid-columns)));
+    }
+  }
 }
 
 /* Generate Grid Spans */
 @for $index from 1 through 12 {
   .u-grid-item--#{$index}-col {
     --grid-span: #{$index};
+  }
+
+  @each $scale, $bp in $breakpoint-scales {
+    @media (min-width: $bp) {
+      .#{$scale}\:#{$index}-col {
+        --grid-span-bp: #{$index};
+      }
+    }
+  }
+}
+
+// RANDOM COLORS FOR TESTING
+$repeat: 12;
+.with-squares > * {
+  @for $i from 1 through $repeat {
+    &:nth-child(#{$i}) {
+      $random: rgb(random(255), random(255), random(255));
+      background-color: $random;
+      border: 1px solid #{$random};
+      padding: var(--space-3xs);
+      text-align: center;
+    }
   }
 }
