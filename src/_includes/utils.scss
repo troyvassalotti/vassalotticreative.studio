@@ -1,0 +1,4 @@
+/* Create equal spacing between elements in a flow context without setting display */
+.flow > * + * {
+  margin-block-start: var(--flow-space, 1.45em);
+}
