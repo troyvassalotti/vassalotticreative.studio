@@ -1,9 +1,9 @@
 export const css = `
 	.button {
 		appearance: none;
-		background-color: rebeccapurple;
+		background-color: var(--color-600);
 		border: 0;
-		color: white;
+		color: var(--color-50);
 	}`;
 
 export default function ({ content }) {

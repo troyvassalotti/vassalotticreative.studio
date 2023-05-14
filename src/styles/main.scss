@@ -3,6 +3,17 @@
 @import "../_includes/variables";
 
 :root {
+  --color-50: #e0f0ff;
+  --color-100: #b8d5fa;
+  --color-200: #8ebef1;
+  --color-300: #63a8e8;
+  --color-400: #3994e0;
+  --color-500: #1f70c6;
+  --color-600: #134d9b;
+  --color-700: #082f70;
+  --color-800: #001746;
+  --color-900: #00061d;
+
   --step--2: clamp(0.78rem, calc(0.78rem + 0.03vw), 0.8rem);
   --step--1: clamp(0.94rem, calc(0.92rem + 0.08vw), 1rem);
   --step-0: clamp(1.13rem, calc(1.09rem + 0.17vw), 1.25rem);
@@ -40,7 +51,24 @@
   --grid-columns: 12;
 }
 
+html {
+  background-color: var(--background);
+  color: var(--foreground);
+  color-scheme: light dark;
+
+  @media (prefers-color-scheme: light) {
+    --background: var(--color-50);
+    --foreground: var(--color-900);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --background: var(--color-900);
+    --foreground: var(--color-50);
+  }
+}
+
 body {
+  font-family: system-ui;
   font-size: var(--step-0);
 }
 
